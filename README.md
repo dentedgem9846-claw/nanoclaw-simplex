@@ -21,7 +21,9 @@ git merge simplex/skill/simplex
 npm install
 npm run build
 
-# Install SimpleX CLI (see SimpleX docs)
+# Install SimpleX CLI
+curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/install.sh | bash
+
 # Start SimpleX CLI
 simplex-chat -p 5225
 
@@ -60,7 +62,10 @@ npm run test -- src/channels/simplex.test.ts
 
 ## Usage
 
-1. **Install SimpleX CLI** following the official SimpleX documentation
+1. **Install SimpleX CLI:**
+   ```bash
+   curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/install.sh | bash
+   ```
 
 2. **Create profile and get address:**
    ```bash
