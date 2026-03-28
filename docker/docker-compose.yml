@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  simplex-cli:
+    image: simplexchat/simplex-cli:latest
+    container_name: simplex-cli
+    ports:
+      - "127.0.0.1:5225:5225"
+    volumes:
+      - simplex-data:/root/.simplex
+    environment:
+      - SIMPLEX_DISPLAY_NAME=${SIMPLEX_DISPLAY_NAME:-nanoclaw}
+    command: ["-p", "5225"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "simplex-chat", "-e", "/help"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  simplex-data:
