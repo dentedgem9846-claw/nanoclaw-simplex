@@ -15,46 +15,31 @@ A privacy-first messaging channel for NanoClaw using SimpleX Chat.
 
 ```bash
 # In your NanoClaw repository
-git remote add simplex https://github.com/YOUR_USERNAME/nanoclaw-simplex.git
-git fetch simplex main
-git merge simplex/main
+git remote add simplex https://github.com/dentedgem9846-claw/nanoclaw.git
+git fetch simplex
+git merge simplex/skill/simplex
 npm install
 npm run build
 
+# Install SimpleX CLI (see SimpleX docs)
 # Start SimpleX CLI
-cd ~/.simplex
-docker compose up -d
+simplex-chat -p 5225
 
 # Restart NanoClaw
 launchctl kickstart -k gui/$(id -u)/com.nanoclaw  # macOS
-# or: systemctl --user restart nanoclaw            # Linux
 ```
 
 ## File Structure
 
 ```
-.
-├── SKILL.md                      # Skill documentation for Claude
-├── src/
-│   └── channels/
-│       ├── simplex.ts            # Main channel implementation
-│       └── simplex.test.ts       # Unit tests
-├── docker/
-│   └── docker-compose.yml        # Docker setup for simplex-chat CLI
-└── patches/
-    ├── channels-index.patch      # Patch for src/channels/index.ts
-    └── package-json.patch        # Patch for package.json
+src/channels/
+├── simplex.ts            # Main channel implementation
+├── simplex.test.ts       # Unit tests
+└── index.ts              # Updated with simplex import
+
+.claude/skills/add-simplex/
+└── SKILL.md              # Skill documentation
 ```
-
-## Channel Implementation
-
-The `SimplexChannel` class implements the NanoClaw `Channel` interface:
-
-- `connect()` — Establishes WebSocket connection to simplex-chat CLI
-- `sendMessage(jid, text)` — Sends messages to SimpleX contacts
-- `isConnected()` — Returns WebSocket connection status
-- `ownsJid(jid)` — Checks if JID belongs to this channel (simplex:*)
-- `disconnect()` — Closes WebSocket connection
 
 ## Configuration
 
@@ -67,19 +52,35 @@ Environment variables:
 | `SIMPLEX_AUTO_ACCEPT` | `true` | Auto-accept contact requests |
 | `SIMPLEX_DISPLAY_NAME` | `nanoclaw` | Bot display name |
 
-## WebSocket Events
-
-The channel handles these SimpleX CLI events:
-
-- `contactRequest` — New contact request (auto-accepted if enabled)
-- `newChatItem` — New message received
-- `contactConnected` — Contact established connection
-
 ## Testing
 
 ```bash
 npm run test -- src/channels/simplex.test.ts
 ```
+
+## Usage
+
+1. **Install SimpleX CLI** following the official SimpleX documentation
+
+2. **Create profile and get address:**
+   ```bash
+   simplex-chat
+   # Enter display name
+   /address create
+   # Copy the simplex:// link
+   Ctrl+C to exit
+   ```
+
+3. **Run CLI in WebSocket mode:**
+   ```bash
+   simplex-chat -p 5225
+   ```
+
+4. **Connect from phone:**
+   - Open SimpleX app
+   - Tap **+** → **Connect via link**
+   - Paste your `simplex://` address
+   - Send a message
 
 ## License
 

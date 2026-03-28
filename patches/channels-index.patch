@@ -1,9 +1,0 @@
---- a/src/channels/index.ts
-+++ b/src/channels/index.ts
-@@ -9,3 +9,6 @@
- 
- // gmail
- 
-+// simplex
-+import './simplex.js'
-+
